@@ -1,6 +1,7 @@
 com\cashflow\common\constants\CorrelationConstants.class
 com\cashflow\common\constants\JwtClaimConstants.class
 com\cashflow\common\logger\LogConstants.class
+com\cashflow\common\exception\CommonSecurityExceptionHandler.class
 com\cashflow\common\exception\UnauthorizedException.class
 com\cashflow\common\logger\LoggingFilter.class
 com\cashflow\common\correlation\CorrelationIdGenerator.class
@@ -17,3 +18,4 @@ com\cashflow\common\util\HeaderUtil.class
 com\cashflow\common\auth\JwtUtil.class
 com\cashflow\common\correlation\CorrelationIdFilter.class
 com\cashflow\common\config\CommonAuthenticationEntryPoint.class
+com\cashflow\common\exception\SecurityErrorResponse.class

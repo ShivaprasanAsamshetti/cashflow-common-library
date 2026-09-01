@@ -9,7 +9,9 @@ C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\constants\SecurityConstants.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\correlation\CorrelationIdFilter.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\correlation\CorrelationIdGenerator.java
+C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\exception\CommonSecurityExceptionHandler.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\exception\InvalidTokenException.java
+C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\exception\SecurityErrorResponse.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\exception\TokenExpiredException.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\exception\UnauthorizedException.java
 C:\cashflow-workspace\cashflow-common-library\src\main\java\com\cashflow\common\logger\LogConstants.java

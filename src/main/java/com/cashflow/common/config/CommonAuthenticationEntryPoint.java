@@ -1,5 +1,6 @@
 package com.cashflow.common.config;
 
+import com.cashflow.common.exception.SecurityErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,9 +13,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Component
 public class CommonAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -28,18 +26,29 @@ public class CommonAuthenticationEntryPoint implements AuthenticationEntryPoint 
             HttpServletResponse response,
             AuthenticationException authException) throws IOException {
 
+        Throwable jwtException = (Throwable) request.getAttribute("jwt_exception");
+        String message;
+
+        if (jwtException != null && jwtException.getMessage() != null) {
+            message = jwtException.getMessage();
+        } else if (authException != null && authException.getMessage() != null) {
+            message = authException.getMessage();
+        } else {
+            message = "Full authentication is required to access this resource";
+        }
+
         logger.warn("Unauthorized access attempt to URI: {} - Error: {}",
-                request.getRequestURI(), authException.getMessage());
+                request.getRequestURI(), message);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        Map<String, Object> errorDetails = new LinkedHashMap<>();
-        errorDetails.put("timestamp", Instant.now().toString());
-        errorDetails.put("status", HttpStatus.UNAUTHORIZED.value());
-        errorDetails.put("error", "Unauthorized");
-        errorDetails.put("message", authException.getMessage() != null ? authException.getMessage() : "Full authentication is required to access this resource");
-        errorDetails.put("path", request.getRequestURI());
+        SecurityErrorResponse errorDetails = SecurityErrorResponse.of(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                message,
+                request.getRequestURI()
+        );
 
         objectMapper.writeValue(response.getOutputStream(), errorDetails);
     }
