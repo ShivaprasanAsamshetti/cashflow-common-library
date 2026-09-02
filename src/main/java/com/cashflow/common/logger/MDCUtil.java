@@ -8,21 +8,12 @@ public final class MDCUtil {
     private MDCUtil() {
     }
 
-    // Correlation ID
-    public static void putCorrelationId(String correlationId) {
-        if (correlationId != null && !correlationId.isBlank()) {
-            MDC.put(CorrelationConstants.CORRELATION_ID_MDC_KEY, correlationId);
-        }
-    }
-
+  
     public static String getCorrelationId() {
         return MDC.get(CorrelationConstants.CORRELATION_ID_MDC_KEY);
     }
 
-    public static void removeCorrelationId() {
-        MDC.remove(CorrelationConstants.CORRELATION_ID_MDC_KEY);
-    }
-
+ 
     // User Public ID
     public static void putUserPublicId(String publicId) {
         if (publicId != null && !publicId.isBlank()) {
