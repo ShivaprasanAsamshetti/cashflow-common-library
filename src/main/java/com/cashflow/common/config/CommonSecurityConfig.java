@@ -5,6 +5,7 @@ import com.cashflow.common.correlation.CorrelationIdFilter;
 import com.cashflow.common.logger.LoggingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@ConditionalOnProperty(name = "cashflow.common.security.enabled", havingValue = "true", matchIfMissing = true)
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
@@ -43,7 +45,8 @@ public class CommonSecurityConfig {
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/v3/api-docs/**",
-                    "/actuator/**")
+                    "/actuator/**",
+                    "/version")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
