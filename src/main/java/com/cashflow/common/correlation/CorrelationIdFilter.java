@@ -26,14 +26,27 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
         String correlationId = request.getHeader(CorrelationConstants.CORRELATION_ID_HEADER);
 
         if (correlationId == null || correlationId.trim().isEmpty()) {
-            correlationId = CorrelationIdGenerator.generate();
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+
+            response.getWriter().write("""
+                {
+                  "status": 400,
+                  "error": "Bad Request",
+                  "message": "X-Correlation-Id header is missing.",
+                  "path": "%s"
+                }
+                """.formatted(request.getRequestURI()));
+
+            return;
         } else {
             correlationId = correlationId.trim();
         }
 
         MDC.put(CorrelationConstants.CORRELATION_ID_MDC_KEY, correlationId);
 
-        // Recommended addition
+       
         request.setAttribute(
                 CorrelationConstants.CORRELATION_ID_MDC_KEY,
                 correlationId
