@@ -78,6 +78,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.warn("Authentication failed: {}", ex.getMessage());
             SecurityContextHolder.clearContext();
             request.setAttribute("jwt_exception", ex);
+            if (ex instanceof com.cashflow.common.exception.TokenExpiredException || ex instanceof io.jsonwebtoken.ExpiredJwtException) {
+                request.setAttribute(SecurityConstants.JWT_ERROR_ATTRIBUTE, SecurityConstants.JWT_ERROR_EXPIRED);
+            } else {
+                request.setAttribute(SecurityConstants.JWT_ERROR_ATTRIBUTE, SecurityConstants.JWT_ERROR_INVALID);
+            }
         }
 
         filterChain.doFilter(request, response);

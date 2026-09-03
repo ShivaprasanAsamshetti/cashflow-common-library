@@ -1,6 +1,8 @@
-package com.cashflow.common.logger;
+package com.cashflow.common.util;
 
 import com.cashflow.common.constants.CorrelationConstants;
+import com.cashflow.common.logger.LogConstants;
+
 import org.slf4j.MDC;
 
 public final class MDCUtil {

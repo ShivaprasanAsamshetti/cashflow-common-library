@@ -88,6 +88,22 @@ public class JwtUtil {
         return claims.getId();
     }
 
+    public boolean isTokenValid(String token) {
+        return jwtTokenValidator.isTokenValid(token);
+    }
+
+    public boolean isTokenValid(String token, String expectedEmail) {
+        if (expectedEmail == null) {
+            return false;
+        }
+        try {
+            String email = extractEmail(token);
+            return expectedEmail.equalsIgnoreCase(email);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getCredentials() == null) {

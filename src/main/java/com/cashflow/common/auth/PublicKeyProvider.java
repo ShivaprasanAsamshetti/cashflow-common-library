@@ -36,6 +36,9 @@ public class PublicKeyProvider {
             if (resource == null || !resource.exists()) {
                 resource = new ClassPathResource("public-key.pem");
             }
+            if (!resource.exists()) {
+                resource = new ClassPathResource("keys/public_key.pem");
+            }
 
             try (InputStream inputStream = resource.getInputStream()) {
                 String key = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8)
