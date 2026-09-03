@@ -1,3 +1,4 @@
 com.cashflow.common.config.CommonSecurityConfig
 com.cashflow.common.version.CommonVersionAutoConfiguration
 com.cashflow.common.exception.CommonExceptionAutoConfiguration
+com.cashflow.common.audit.config.CommonAuditAutoConfiguration
