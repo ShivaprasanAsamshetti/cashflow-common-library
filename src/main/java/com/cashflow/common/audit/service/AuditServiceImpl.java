@@ -20,6 +20,7 @@ import com.cashflow.common.audit.enums.AuditResult;
 import com.cashflow.common.audit.model.AuditLogEvent;
 import com.cashflow.common.audit.repository.AuditLogRepository;
 import com.cashflow.common.constants.CorrelationConstants;
+import com.cashflow.common.util.RequestUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -182,17 +183,6 @@ public class AuditServiceImpl implements AuditService {
     }
 
     private String resolveIpAddress() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (!(requestAttributes instanceof ServletRequestAttributes servletRequestAttributes)) {
-            return null;
-        }
-
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        String forwardedFor = request.getHeader(AuditConstants.FORWARDED_FOR_HEADER);
-        if (forwardedFor != null && !forwardedFor.isBlank()) {
-            return forwardedFor.split(",")[0].trim();
-        }
-
-        return request.getRemoteAddr();
+        return RequestUtil.getClientIpAddress();
     }
 }
